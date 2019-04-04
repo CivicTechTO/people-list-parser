@@ -5,6 +5,8 @@ const app = new Vue({
   data: {
     rows: [],
   },
+  // NOTE: We do this because both Jekyll and VueJS try to use
+  // double-curly-bracket syntax, eg. {{ some_var }}
   delimiters: ["<%","%>"],
   methods: {
     extractTwitterHandle: function(url) {
