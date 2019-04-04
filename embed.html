@@ -32,9 +32,9 @@
         </table>
     </div>
     {% if site.github -%}
-      <script src="index.js?v={{ site.github.build_revision }}"></script>
+      <script src="embed.js?v={{ site.github.build_revision }}"></script>
     {% else %}
-      <script src="index.js"></script>
+      <script src="embed.js"></script>
     {%- endif %}
   </body>
 </html>
