@@ -34,21 +34,29 @@
       </ul>
     </nav>
     <div class="container">
-      <div class="row">
+      <div>
         <p>Use the following embed code to have this work on your website:</p>
 
-        {% highlight html -%}
-          <iframe id="people-list" src="{{ '/embed.html' | absolute_url }}" allowfullscreen></iframe>
-        {%- endhighlight %}
+        {% highlight html %}
+          <iframe id="people-list"
+            src="{{ '/embed.html' | absolute_url }}"
+            data-gsheet-key="{{ site.gsheet.key }}"
+            data-gsheet-sheet-id="{{ site.gsheet.sheet_id }}"
+            allowfullscreen></iframe>
+        {% endhighlight %}
 
         <p>If you wish to inherit styles from the parent page, append this javascript to the bottom of the page:</p>
 
-        {% highlight html -%}
+        {% highlight html %}
           <script src="{{ 'embed_style_helper.js' | absolute_url }}"></script>
-        {%- endhighlight %}
+        {% endhighlight %}
 
         <div class="embed-responsive embed-responsive-16by9">
-          <iframe id="people-list" src="{{ '/embed.html' | absolute_url }}" allowfullscreen></iframe>
+          <iframe id="people-list"
+            src="{{ '/embed.html' | absolute_url }}"
+            data-gsheet-key="{{ site.gsheet.key }}"
+            data-gsheet-sheet-id="{{ site.gsheet.sheet_id }}"
+            allowfullscreen></iframe>
         </div>
       </div>
     </div>

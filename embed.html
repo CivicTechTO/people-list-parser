@@ -9,8 +9,7 @@
     <title>{{ site.app_name }} - {{ site.org_name }}</title>
   </head>
   <body>
-    <div id="app" class="container">
-      <div class="row">
+    <div id="app">
         <table>
           <thead>
             <tr>
@@ -31,7 +30,6 @@
             </tr>
           </tbody>
         </table>
-      </div>
     </div>
     {% if site.github -%}
       <script src="index.js?v={{ site.github.build_revision }}"></script>

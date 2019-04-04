@@ -17,8 +17,8 @@ const app = new Vue({
   mounted () {
     var vm = this
     new Promise((complete, error) => {
-      const key = '{{ site.gsheet.key }}'
-      const id = '{{ site.gsheet.sheet_id }}'
+      const key = window.frameElement.getAttribute('data-gsheet-key') || '{{ site.gsheet.key }}'
+      const id = window.frameElement.getAttribute('data-gsheet-sheet-id') || '{{ site.gsheet.sheet_id }}'
       const csvUrl = `https://docs.google.com/spreadsheets/d/${key}/export?format=csv&id=${key}&gid=${id}`
       Papa.parse(csvUrl, {
         download: true,
