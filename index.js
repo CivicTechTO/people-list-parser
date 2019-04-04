@@ -6,6 +6,14 @@ const app = new Vue({
     rows: [],
   },
   delimiters: ["<%","%>"],
+  methods: {
+    extractTwitterHandle: function(url) {
+      return url.split('/')[3]
+    },
+    extractLinkedinHandle: function(url) {
+      return url.split('/')[4]
+    },
+  },
   mounted () {
     var vm = this
     new Promise((complete, error) => {

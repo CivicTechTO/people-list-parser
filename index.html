@@ -33,40 +33,29 @@
         </li>
       </ul>
     </nav>
-    <div class="container">
+    <div id="app" class="container">
       <div class="row">
-        <div class="col">
-          <h4>Here's a shortcut for this week's suggested hashtags & handles!</h4>
-        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Slack</th>
+              <th>Twitter</th>
+              <th>Linkedin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="row in rows">
+              <td><% row.first_name %></td>
+              <td><% row.last_name %></td>
+              <td><% row.slack_username %></td>
+              <td><a v-if="row.twitter_url" :href="row.twitter_url">@<% extractTwitterHandle(row.twitter_url) %></a></td>
+              <td><a v-if="row.linkedin_url" :href="row.linkedin_url">/<% extractLinkedinHandle(row.linkedin_url) %></a></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="row">
-        <div class="col">
-        </div>
-        <div class="col">
-          <a class="btn btn-primary btn-lg" href="?redirect=true" role="button">Tweet</a>
-        </div>
-        <div class="col"></div>
-      </div>
-    </div>
-    <div id="app">
-      <table>
-        <thead>
-          <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Slack</th>
-            <th>Twitter</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="row in rows">
-            <td><% row.first_name %></td>
-            <td><% row.last_name %></td>
-            <td><% row.slack_username %></td>
-            <td><% row.twitter_url %></td>
-          </tr>
-        </tbody>
-      </table>
     </div>
     {% if site.github -%}
       <script src="index.js?v={{ site.github.build_revision }}"></script>
