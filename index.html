@@ -41,10 +41,16 @@
           <iframe id="people-list" src="{{ '/embed.html' | absolute_url }}" allowfullscreen></iframe>
         {%- endhighlight %}
 
+        <p>If you wish to inherit styles from the parent page, append this javascript to the bottom of the page:</p>
+
+        {% highlight html -%}
+          <script src="{{ 'embed_style_helper.js' | absolute_url }}"></script>
+        {%- endhighlight %}
+
         <div class="embed-responsive embed-responsive-16by9">
           <iframe id="people-list" src="{{ '/embed.html' | absolute_url }}" allowfullscreen></iframe>
         </div>
       </div>
     </div>
-    <script src="embed_style_helper.js"></script>
+    <script src="{{ 'embed_style_helper.js' | absolute_url }}"></script>
 </html>
