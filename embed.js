@@ -20,7 +20,7 @@ const app = new Vue({
     rows: [],
     statusFilter: '',
     style: 'grid',
-    slackTeam: 'civictechto',
+    slackTeam: '{{ site.slack_team }}',
   },
   // NOTE: We do this because both Jekyll and VueJS try to use
   // double-curly-bracket syntax, eg. {{ some_var }}
