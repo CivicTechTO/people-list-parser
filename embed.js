@@ -8,6 +8,12 @@ function inIframe () {
   }
 }
 
+var getLocation = function(href) {
+  var l = document.createElement("a");
+  l.href = href;
+  return l;
+};
+
 const app = new Vue({
   el: '#app',
   data: {
@@ -28,15 +34,22 @@ const app = new Vue({
     },
     slackUrl: function(memberId) {
       return `https://${this.slackTeam}.slack.com/team/${memberId}`
+    },
+    extractGDocResourceData: function(gDocUrl) {
+      // Ex: https://docs.google.com/spreadsheets/d/1LCVxEXuv70R-NozOwhNxZFtTZUmn1FLMPVD5wgIor9o/edit#gid=642523045
+      l = getLocation(gDocUrl)
+      var key = l.pathname.split('/')[3]
+      var sheet_id = l.hash.substr(1).split('=')[1]
+      return [key, sheet_id]
     }
   },
   mounted () {
     var vm = this
     new Promise((complete, error) => {
-      const key = inIframe() ? (window.frameElement.getAttribute('data-gsheet-key') || '{{ site.gsheet.key }}') : '{{ site.gsheet.key }}'
-      const id = inIframe() ? (window.frameElement.getAttribute('data-gsheet-sheet-id') || '{{ site.gsheet.sheet_id }}') :'{{ site.gsheet.sheet_id }}'
+      const gDocUrl = inIframe() ? (window.frameElement.getAttribute('data-gsheet-url') || '{{ site.gsheet.url }}') :'{{ site.gsheet.url }}'
       vm.statusFilter = inIframe() ? (window.frameElement.getAttribute('data-status') || '') : ''
       vm.style = inIframe() ? (window.frameElement.getAttribute('data-style') || 'grid') : 'grid'
+      const [key, id] = vm.extractGDocResourceData(gDocUrl)
       const csvUrl = `https://docs.google.com/spreadsheets/d/${key}/export?format=csv&id=${key}&gid=${id}`
       Papa.parse(csvUrl, {
         download: true,
