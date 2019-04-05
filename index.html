@@ -34,9 +34,11 @@
         </li>
       </ul>
     </nav>
-    <div class="container">
+    <div class="container mt-5">
       <div>
-        <p>Use the following embed code to have this work on your website:</p>
+        <p>Use the following embed code to have this build a roster of people
+          from any properly-formatted spreadsheet <a href="{{ site.gsheet.url }}">(sample)</a>,
+          to work on your website:</p>
 
         {% highlight html %}
           <iframe id="people-list"
@@ -54,6 +56,8 @@
         {% highlight html %}
           <script src="{{ 'embed_style_helper.js' | absolute_url }}"></script>
         {% endhighlight %}
+
+        <h2>Example</h2>
 
         <div class="embed-responsive embed-responsive-16by9">
           <iframe id="people-list"
