@@ -21,10 +21,17 @@ const app = new Vue({
   mounted () {
     var vm = this
     new Promise((complete, error) => {
-      const key = window.frameElement.getAttribute('data-gsheet-key') || '{{ site.gsheet.key }}'
-      const id = window.frameElement.getAttribute('data-gsheet-sheet-id') || '{{ site.gsheet.sheet_id }}'
-      vm.statusFilter = window.frameElement.getAttribute('data-status') || ''
-      vm.style = window.frameElement.getAttribute('data-style') || 'grid'
+      function inIframe () {
+        try {
+          return window.self !== window.top;
+        } catch (e) {
+          return true;
+        }
+      }
+      const key = inIframe ? (window.frameElement.getAttribute('data-gsheet-key') || '{{ site.gsheet.key }}') : '{{ site.gsheet.key }}'
+      const id = inIframe ? (window.frameElement.getAttribute('data-gsheet-sheet-id') || '{{ site.gsheet.sheet_id }}') :'{{ site.gsheet.sheet_id }}'
+      vm.statusFilter = inIframe ? (window.frameElement.getAttribute('data-status') || '') : ''
+      vm.style = inIframe ? (window.frameElement.getAttribute('data-style') || 'grid') : ''
       const csvUrl = `https://docs.google.com/spreadsheets/d/${key}/export?format=csv&id=${key}&gid=${id}`
       Papa.parse(csvUrl, {
         download: true,
