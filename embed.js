@@ -6,6 +6,7 @@ const app = new Vue({
     rows: [],
     statusFilter: '',
     style: 'grid',
+    slackTeam: 'civictechto',
   },
   // NOTE: We do this because both Jekyll and VueJS try to use
   // double-curly-bracket syntax, eg. {{ some_var }}
@@ -17,6 +18,9 @@ const app = new Vue({
     extractLinkedinHandle: function(url) {
       return url.split('/')[4]
     },
+    slackUrl: function(memberId) {
+      return `https://${this.slackTeam}.slack.com/team/${memberId}`
+    }
   },
   mounted () {
     var vm = this
