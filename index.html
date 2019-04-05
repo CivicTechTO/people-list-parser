@@ -15,6 +15,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.2/gh-fork-ribbon.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
     <title>{{ site.app_name }} - {{ site.org_name }}</title>
     <style>
@@ -43,8 +44,11 @@
             data-gsheet-key="{{ site.gsheet.key }}"
             data-gsheet-sheet-id="{{ site.gsheet.sheet_id }}"
             data-status="active"
+            data-style="grid"
             allowfullscreen></iframe>
         {% endhighlight %}
+
+        <p>Options for <code>data-style</code> data attribute can be "grid" or "table". (Default: grid)</p>
 
         <p>If you wish to inherit styles from the parent page, append this javascript to the bottom of the page:</p>
 
@@ -57,6 +61,7 @@
             src="{{ '/embed.html' | absolute_url }}"
             data-gsheet-key="{{ site.gsheet.key }}"
             data-gsheet-sheet-id="{{ site.gsheet.sheet_id }}"
+            data-style="grid"
             data-status="active"
             allowfullscreen></iframe>
         </div>
