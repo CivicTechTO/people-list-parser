@@ -22,6 +22,16 @@
       .row {
         padding-top: 30px;
       }
+
+      /*
+      Kinda messy way to ensure that we show full iframe, but can create
+      lots of whitespace below.
+
+      TODO: Figure out how to resize in JS.
+       */
+      .embed-responsive-custom::before {
+        padding-top: 200%;
+      }
     </style>
   </head>
   <body>
@@ -59,7 +69,7 @@
 
         <h2>Example</h2>
 
-        <div class="embed-responsive embed-responsive-16by9">
+        <div class="embed-responsive embed-responsive-custom">
           <iframe id="people-list"
             src="{{ '/embed.html' | absolute_url }}"
             data-gsheet-url="{{ site.gsheet.url }}"
