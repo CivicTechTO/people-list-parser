@@ -29,17 +29,17 @@
     <div id="app" class="container-fluid">
       <div v-if="style == 'grid'" class="card-columns">
         <div v-for="person in rows" class="card">
-          <img v-if="person.avatar_url" class="card-img-top" :src="person.avatar_url" alt="Card image cap">
+          <img v-if="person.avatar_url" class="card-img-top" :src="person.avatar_url" :alt="avatarAltText(person)">
           <div class="card-body p-3">
             <h6 class="card-title m-0"><% person.first_name %> <% person.last_name %></h5>
           </div>
           <div class="card-footer p-2">
-            <a v-if="person.slack_id" :href="slackUrl(person.slack_id)" class="btn btn-primary btn-sm w-100 mb-2 text-left"><i class="fab fa-lg fa-slack-hash"></i> <% person.slack_username %></a>
-            <span v-else class="btn btn-primary btn-sm disabled w-100 mb-2 text-left"><i class="fab fa-lg fa-slack-hash"></i> <% person.slack_username %></span>
-            <a v-if="person.twitter_url" target="_blank" :href="person.twitter_url" class="btn btn-primary btn-sm mr-1"><i class="fab fa-lg fa-twitter"></i></a>
-            <a v-else href="#" class="btn btn-secondary btn-sm mr-1 disabled"><i class="fab fa-lg fa-twitter"></i></a>
-            <a v-if="person.linkedin_url" target="_blank" :href="person.linkedin_url" class="btn btn-primary btn-sm mr-1"><i class="fab fa-lg fa-linkedin-in"></i></a>
-            <a v-else href="#" class="btn btn-secondary btn-sm mr-1 disabled"><i class="fab fa-lg fa-linkedin-in"></i></a>
+            <a v-if="person.slack_id" :href="slackUrl(person.slack_id)" class="btn btn-primary btn-sm w-100 mb-2 text-left"><i class="fab fa-lg fa-slack-hash"></i><span class="sr-only">Slack:</span> <% person.slack_username %></a>
+            <span v-else class="btn btn-primary btn-sm disabled w-100 mb-2 text-left"><i class="fab fa-lg fa-slack-hash"></i><span class="sr-only">Slack:</span> <% person.slack_username %></span>
+            <a v-if="person.twitter_url" target="_blank" :href="person.twitter_url" class="btn btn-primary btn-sm mr-1"><i class="fab fa-lg fa-twitter"></i><span class="sr-only">Twitter</span></a>
+            <a v-else href="#" class="btn btn-secondary btn-sm mr-1 disabled"><i class="fab fa-lg fa-twitter"></i><span class="sr-only">Twitter</span></a>
+            <a v-if="person.linkedin_url" target="_blank" :href="person.linkedin_url" class="btn btn-primary btn-sm mr-1"><i class="fab fa-lg fa-linkedin-in"></i><span class="sr-only">Linkedin</span></a>
+            <a v-else href="#" class="btn btn-secondary btn-sm mr-1 disabled"><i class="fab fa-lg fa-linkedin-in"></i><span class="sr-only">Twitter</span></a>
           </div>
         </div>
       </div>

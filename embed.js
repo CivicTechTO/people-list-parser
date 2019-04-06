@@ -41,7 +41,10 @@ const app = new Vue({
       var key = l.pathname.split('/')[3]
       var sheet_id = l.hash.substr(1).split('=')[1]
       return [key, sheet_id]
-    }
+    },
+    avatarAltText: function(person) {
+      return `Photo for ${person.first_name} ${person.last_name}`
+    },
   },
   mounted () {
     var vm = this
