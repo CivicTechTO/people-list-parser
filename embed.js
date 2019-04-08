@@ -58,8 +58,8 @@ const app = new Vue({
     var vm = this
     new Promise((complete, error) => {
       const gDocUrl = getConfig('gsheet-url', '{{ site.gsheet.url }}')
-      vm.statusFilter = getConfig('status', '')
-      vm.style = getConfig('style', 'grid')
+      vm.statusFilter = getConfig('status', vm.statusFilter)
+      vm.style = getConfig('style', vm.style)
       const [key, id] = vm.extractGDocResourceData(gDocUrl)
       const rosterCsvUrl = generateCsvUrl(key, id)
       Papa.parse(rosterCsvUrl, {
