@@ -25,6 +25,8 @@ var getConfig = function (keyName, defaultValue) {
 const app = new Vue({
   el: '#app',
   data: {
+    rosterData: [],
+    checkinData: [],
     rows: [],
     statusFilter: '',
     style: 'grid',
@@ -56,6 +58,35 @@ const app = new Vue({
   },
   mounted () {
     var vm = this
+    var fetchRosterData = new Promise((complete, error) => {
+      const gDocUrl = getConfig('gsheet-url', '{{ site.gsheet.url }}')
+      const [key, id] = vm.extractGDocResourceData(gDocUrl)
+      const rosterCsvUrl = generateCsvUrl(key, id)
+      Papa.parse(rosterCsvUrl, {
+        download: true,
+        header: true,
+        complete: (results, file) => {
+          vm.rosterData = results.data
+        },
+      })
+    })
+    var fetchCheckinData = new Promise((complete, error) => {
+      const gDocUrl = getConfig('gsheet-checkin-url', '{{ site.gsheet.checkin_url }}')
+      const [key, id] = vm.extractGDocResourceData(gDocUrl)
+      const checkinCsvUrl = generateCsvUrl(key, id)
+      Papa.parse(checkinCsvUrl, {
+        download: true,
+        header: true,
+        complete: (results, file) => {
+          vm.checkinData = results.data
+        },
+      })
+    })
+    Promise.all([fetchRosterData, fetchCheckinData])
+      .then((results) => {
+        console.log(vm.checkinData)
+        console.log(vm.rosterData)
+      })
     new Promise((complete, error) => {
       const gDocUrl = getConfig('gsheet-url', '{{ site.gsheet.url }}')
       vm.statusFilter = getConfig('status', vm.statusFilter)
