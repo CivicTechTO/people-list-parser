@@ -14,6 +14,14 @@ var getLocation = function(href) {
   return l;
 };
 
+var generateCsvUrl = function(key, id) {
+  return `https://docs.google.com/spreadsheets/d/${key}/export?format=csv&id=${key}&gid=${id}`
+}
+
+var getConfig = function (keyName, defaultValue) {
+  return inIframe() ? (window.frameElement.getAttribute('data-'+keyName) || defaultValue) : defaultValue
+}
+
 const app = new Vue({
   el: '#app',
   data: {
@@ -49,12 +57,12 @@ const app = new Vue({
   mounted () {
     var vm = this
     new Promise((complete, error) => {
-      const gDocUrl = inIframe() ? (window.frameElement.getAttribute('data-gsheet-url') || '{{ site.gsheet.url }}') :'{{ site.gsheet.url }}'
-      vm.statusFilter = inIframe() ? (window.frameElement.getAttribute('data-status') || '') : ''
-      vm.style = inIframe() ? (window.frameElement.getAttribute('data-style') || 'grid') : 'grid'
+      const gDocUrl = getConfig('gsheet-url', '{{ site.gsheet.url }}')
+      vm.statusFilter = getConfig('status', '')
+      vm.style = getConfig('style', 'grid')
       const [key, id] = vm.extractGDocResourceData(gDocUrl)
-      const csvUrl = `https://docs.google.com/spreadsheets/d/${key}/export?format=csv&id=${key}&gid=${id}`
-      Papa.parse(csvUrl, {
+      const rosterCsvUrl = generateCsvUrl(key, id)
+      Papa.parse(rosterCsvUrl, {
         download: true,
         header: true,
         complete: complete,
