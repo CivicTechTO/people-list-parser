@@ -58,49 +58,28 @@ const app = new Vue({
   },
   mounted () {
     var vm = this
-    var fetchRosterData = new Promise((complete, error) => {
-      const gDocUrl = getConfig('gsheet-url', '{{ site.gsheet.url }}')
-      const [key, id] = vm.extractGDocResourceData(gDocUrl)
-      const rosterCsvUrl = generateCsvUrl(key, id)
-      Papa.parse(rosterCsvUrl, {
-        download: true,
-        header: true,
-        complete: (results, file) => {
-          vm.rosterData = results.data
-        },
+    vm.statusFilter = getConfig('status', vm.statusFilter)
+    vm.style = getConfig('style', vm.style)
+    var generateFetchDataPromise = (keyName, defaultValue, dataKey) => {
+      return new Promise((complete, error) => {
+        const gDocUrl = getConfig(keyName, defaultValue)
+        const [key, id] = vm.extractGDocResourceData(gDocUrl)
+        const csvUrl = generateCsvUrl(key, id)
+        Papa.parse(csvUrl, {
+          download: true,
+          header: true,
+          complete: (results, file) => {
+            vm.$set(this, dataKey, results.data)
+            complete(results.data)
+          },
+        })
       })
-    })
-    var fetchCheckinData = new Promise((complete, error) => {
-      const gDocUrl = getConfig('gsheet-checkin-url', '{{ site.gsheet.checkin_url }}')
-      const [key, id] = vm.extractGDocResourceData(gDocUrl)
-      const checkinCsvUrl = generateCsvUrl(key, id)
-      Papa.parse(checkinCsvUrl, {
-        download: true,
-        header: true,
-        complete: (results, file) => {
-          vm.checkinData = results.data
-        },
-      })
-    })
+    }
+    var fetchRosterData = generateFetchDataPromise('gsheet-url', '{{ site.gsheet.url }}', 'rosterData')
+    var fetchCheckinData = generateFetchDataPromise('gsheet-checkin-url', '{{ site.gsheet.checkin_url }}', 'checkinData')
     Promise.all([fetchRosterData, fetchCheckinData])
       .then((results) => {
-        console.log(vm.checkinData)
-        console.log(vm.rosterData)
-      })
-    new Promise((complete, error) => {
-      const gDocUrl = getConfig('gsheet-url', '{{ site.gsheet.url }}')
-      vm.statusFilter = getConfig('status', vm.statusFilter)
-      vm.style = getConfig('style', vm.style)
-      const [key, id] = vm.extractGDocResourceData(gDocUrl)
-      const rosterCsvUrl = generateCsvUrl(key, id)
-      Papa.parse(rosterCsvUrl, {
-        download: true,
-        header: true,
-        complete: complete,
-      })
-    })
-      .then(function(results, file) {
-        var filtered = results.data.filter(function(item) {
+        var filtered = vm.rosterData.filter(function(item) {
           return vm.statusFilter == '' || vm.statusFilter == item.status
         })
         vm.rows = filtered
