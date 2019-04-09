@@ -5,6 +5,7 @@
   <head>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/papaparse@4.6.3/papaparse.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
 
     <title>{{ site.app_name }} - {{ site.org_name }}</title>
   </head>
@@ -28,7 +29,7 @@
     </style>
     <div id="app" class="container-fluid">
       <div v-if="style == 'grid'" class="card-columns">
-        <div v-for="person in rows" class="card">
+        <div v-for="person in items" class="card">
           <img v-if="person.avatar_url" class="card-img-top" :src="person.avatar_url" :alt="avatarAltText(person)">
           <div class="card-body p-3">
             <h6 class="card-title m-0"><% person.first_name %> <% person.last_name %></h5>
@@ -54,12 +55,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="row in rows">
-            <td><% row.first_name %></td>
-            <td><% row.last_name %></td>
-            <td><% row.slack_username %></td>
-            <td><a v-if="row.twitter_url" :href="row.twitter_url">@<% extractTwitterHandle(row.twitter_url) %></a></td>
-            <td><a v-if="row.linkedin_url" :href="row.linkedin_url">/<% extractLinkedinHandle(row.linkedin_url) %></a></td>
+          <tr v-for="person in items">
+            <td><% person.first_name %></td>
+            <td><% person.last_name %></td>
+            <td><% person.slack_username %></td>
+            <td><a v-if="person.twitter_url" :href="person.twitter_url">@<% extractTwitterHandle(person.twitter_url) %></a></td>
+            <td><a v-if="person.linkedin_url" :href="person.linkedin_url">/<% extractLinkedinHandle(person.linkedin_url) %></a></td>
           </tr>
         </tbody>
       </table>

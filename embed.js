@@ -27,7 +27,7 @@ const app = new Vue({
   data: {
     rosterData: [],
     checkinData: [],
-    rows: [],
+    items: [],
     statusFilter: '',
     style: 'grid',
     slackTeam: '{{ site.slack_team }}',
@@ -82,7 +82,26 @@ const app = new Vue({
         var filtered = vm.rosterData.filter(function(item) {
           return vm.statusFilter == '' || vm.statusFilter == item.status
         })
-        vm.rows = filtered
+        if (vm.checkinData) {
+          console.log('lets process checkin data')
+          let result = _(vm.checkinData).sortBy('date').groupBy('slack_id').value()
+          for (let [k,v] of Object.entries(result)) {
+            v = _.filter(v, {'status': 'active'})
+            console.log(k)
+            let user = _(vm.rosterData).find({'slack_id': k})
+            console.log(user)
+            if (v.length > 0) {
+              let start = v[0].date
+              let end = v[v.length-1].date
+              if (start !== end) {
+                console.log(`Dates: ${start} - ${end}`)
+              }
+            }
+          }
+          vm.items = filtered
+        } else {
+          vm.items = filtered
+        }
       })
   },
 })
