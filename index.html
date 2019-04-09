@@ -54,12 +54,13 @@
           <iframe id="people-list"
             src="{{ '/embed.html' | absolute_url }}"
             data-gsheet-url="{{ site.gsheet.url }}"
+            data-gsheet-checkin-url="{{ site.gsheet.checkin_url }}"
             data-status="active"
             data-style="grid"
             allowfullscreen></iframe>
         {% endhighlight %}
 
-        <p>Options for <code>data-style</code> data attribute can be "grid" or "table". (Default: grid)</p>
+        <p>Options for <code>data-style</code> data attribute can be <code>grid</code> or <code>table</code>. (Default: <code>grid</code>)</p>
 
         <p>If you wish to inherit styles from the parent page, append this javascript to the bottom of the page:</p>
 
@@ -75,6 +76,7 @@
           <iframe id="people-list"
             src="{{ '/embed.html' | absolute_url }}"
             data-gsheet-url="{{ site.gsheet.url }}"
+            data-gsheet-checkin-url="{{ site.gsheet.checkin_url }}"
             data-style="grid"
             data-status="active"
             allowfullscreen></iframe>
