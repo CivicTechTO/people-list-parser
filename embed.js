@@ -79,27 +79,23 @@ const app = new Vue({
     var fetchCheckinData = generateFetchDataPromise('gsheet-checkin-url', '{{ site.gsheet.checkin_url }}', 'checkinData')
     Promise.all([fetchRosterData, fetchCheckinData])
       .then((results) => {
-        var filtered = vm.rosterData.filter(function(item) {
-          return vm.statusFilter == '' || vm.statusFilter == item.status
-        })
         if (vm.checkinData) {
-          console.log('lets process checkin data')
-          let result = _(vm.checkinData).sortBy('date').groupBy('slack_id').value()
-          for (let [k,v] of Object.entries(result)) {
-            v = _.filter(v, {'status': 'active'})
-            console.log(k)
-            let user = _(vm.rosterData).find({'slack_id': k})
-            console.log(user)
+          vm.items = []
+          // TODO: Compute active ranges for organizers?
+          let checkinsByMember = _(vm.checkinData).sortBy('date').groupBy('slack_id').value()
+          for (let [k,v] of Object.entries(checkinsByMember)) {
+            let member = _(vm.rosterData).find({'slack_id': k})
             if (v.length > 0) {
-              let start = v[0].date
-              let end = v[v.length-1].date
-              if (start !== end) {
-                console.log(`Dates: ${start} - ${end}`)
+              let latest = v[v.length-1]
+              if (vm.statusFilter == '' || vm.statusFilter == latest.status) {
+                vm.items.push(member)
               }
             }
           }
-          vm.items = filtered
         } else {
+          var filtered = vm.rosterData.filter(function(item) {
+            return vm.statusFilter == '' || vm.statusFilter == item.status
+          })
           vm.items = filtered
         }
       })
