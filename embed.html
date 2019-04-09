@@ -26,11 +26,29 @@
           column-count: 5;
         }
       }
+
+      .btn-floating {
+        position: absolute;
+        right: 10px;
+        bottom: -15px;
+      }
+
+      .card-image {
+        position: relative;
+      }
+
+      .cofounder-icon {
+        border-radius: 100rem;
+        font-size: 1.5rem;
+      }
     </style>
     <div id="app" class="container-fluid">
       <div v-if="style == 'grid'" class="card-columns">
         <div v-for="person in items" class="card">
-          <img v-if="person.avatar_url" class="card-img-top" :src="person.avatar_url" :alt="avatarAltText(person)">
+          <div class="card-image">
+            <img v-if="person.avatar_url" class="card-img-top" :src="person.avatar_url" :alt="avatarAltText(person)">
+            <span v-if="person.is_cofounder" class="cofounder-icon btn btn-floating btn-light active"><i class="fas fa-flag-checkered"></i></span>
+          </div>
           <div class="card-body p-3">
             <h6 class="card-title m-0"><% person.first_name %> <% person.last_name %></h5>
           </div>
