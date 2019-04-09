@@ -84,7 +84,26 @@ const app = new Vue({
           // TODO: Compute active ranges for organizers?
           let checkinsByMember = _(vm.checkinData).sortBy('date').groupBy('slack_id').value()
           for (let [k,v] of Object.entries(checkinsByMember)) {
+            var processSkippedKeys = (obj) => {
+              for (let prop in obj) {
+                if (['skip', 'pass', 'none'].includes(obj[prop].toLowerCase())) {
+                  delete obj[prop]
+                }
+              }
+              return obj
+            }
+            var stripLockPrefix = (obj) => {
+              for (let prop in obj) {
+                let PREFIX = 'lock:'
+                if (obj[prop].toLowerCase().startsWith(PREFIX)) {
+                  obj[prop] = obj[prop].substr(PREFIX.length)
+                }
+              }
+              return obj
+            }
             let member = _(vm.rosterData).find({'slack_id': k})
+            member = processSkippedKeys(member)
+            member = stripLockPrefix(member)
             if (v.length > 0) {
               let latest = v[v.length-1]
               if (vm.statusFilter == '' || vm.statusFilter == latest.status) {
