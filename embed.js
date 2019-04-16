@@ -33,7 +33,7 @@ var generateCsvUrl = function(key, id) {
 var getConfig = function (keyName, defaultValue) {
   var qsValue = getQueryVariable(keyName)
   if (qsValue) {
-    return sqValue
+    return qsValue
   }
 
   return inIframe() ? (window.frameElement && window.frameElement.getAttribute('data-'+keyName) || defaultValue) : defaultValue
