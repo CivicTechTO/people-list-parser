@@ -52,11 +52,9 @@
 
         {% highlight html %}
           <iframe id="people-list"
-            src="{{ '/embed.html' | absolute_url }}"
+            src="{{ '/embed.html?status=active&style=grid' | absolute_url }}"
             data-gsheet-url="{{ site.gsheet.url }}"
             data-gsheet-checkin-url="{{ site.gsheet.checkin_url }}"
-            data-status="active"
-            data-style="grid"
             allowfullscreen></iframe>
         {% endhighlight %}
 
@@ -74,14 +72,11 @@
 
         <div class="embed-responsive embed-responsive-custom">
           <iframe id="people-list"
-            src="{{ '/embed.html' | absolute_url }}"
+            src="{{ '/embed.html?status=active&style=grid' | absolute_url }}"
             data-gsheet-url="{{ site.gsheet.url }}"
             data-gsheet-checkin-url="{{ site.gsheet.checkin_url }}"
-            data-style="grid"
-            data-status="active"
             allowfullscreen></iframe>
         </div>
       </div>
     </div>
-    <script src="{{ 'embed_style_helper.js' | absolute_url }}"></script>
 </html>

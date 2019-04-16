@@ -8,6 +8,18 @@ function inIframe () {
   }
 }
 
+function getQueryVariable(variable) {
+  var query = window.location.search.substring(1);
+  var vars = query.split('&');
+  for (var i = 0; i < vars.length; i++) {
+    var pair = vars[i].split('=');
+    if (decodeURIComponent(pair[0]) == variable) {
+      return decodeURIComponent(pair[1]);
+    }
+  }
+  console.log('Query variable %s not found', variable);
+}
+
 var getLocation = function(href) {
   var l = document.createElement("a");
   l.href = href;
@@ -19,6 +31,11 @@ var generateCsvUrl = function(key, id) {
 }
 
 var getConfig = function (keyName, defaultValue) {
+  var qsValue = getQueryVariable(keyName)
+  if (qsValue) {
+    return sqValue
+  }
+
   return inIframe() ? (window.frameElement && window.frameElement.getAttribute('data-'+keyName) || defaultValue) : defaultValue
 }
 
