@@ -19,7 +19,7 @@ var generateCsvUrl = function(key, id) {
 }
 
 var getConfig = function (keyName, defaultValue) {
-  return inIframe() ? (window.frameElement.getAttribute('data-'+keyName) || defaultValue) : defaultValue
+  return inIframe() ? (window.frameElement && window.frameElement.getAttribute('data-'+keyName) || defaultValue) : defaultValue
 }
 
 const app = new Vue({
