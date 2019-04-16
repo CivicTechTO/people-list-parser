@@ -14,17 +14,27 @@
   </head>
   <body>
     <style type="text/css">
+      // breakpoint: extra small
       .card-columns {
         column-count: 2;
       }
 
+      // breakpoint: small
       @media (min-width: 576px) {
         .card-columns {
           column-count: 3;
         }
       }
 
+      // breakpoint: medium
       @media (min-width: 768px) {
+        .card-columns {
+          column-count: 4;
+        }
+      }
+
+      // breakpoint: large
+      @media (min-width: 992px) {
         .card-columns {
           column-count: 5;
         }
